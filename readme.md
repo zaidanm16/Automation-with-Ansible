@@ -30,9 +30,9 @@ nano /etc/hosts
 
 	- Copy controller public key from regular user to all nodes.
 	```zsh
-	ssh-copy-id -i ~/.ssh/id_rsa.pub student@pod-zaidanmuhammad169-controller
-	ssh-copy-id -i ~/.ssh/id_rsa.pub student@pod-zaidanmuhammad169-managed1
-	ssh-copy-id -i ~/.ssh/id_rsa.pub student@pod-zaidanmuhammad169-managed2
+	ssh-copy-id -i .ssh/id_rsa.pub student@pod-zaidanmuhammad169-controller
+	ssh-copy-id -i .ssh/id_rsa.pub student@pod-zaidanmuhammad169-managed1
+	ssh-copy-id -i .ssh/id_rsa.pub student@pod-zaidanmuhammad169-managed2
 	```
 
 	- Verify login without password
@@ -127,14 +127,13 @@ Executed by Ansible
 	- Server Inventory Spesifications
 	![Server Inventory Spesifications](https://course.adinusa.id/media/markdownx/a7245250-d68b-4975-8f39-3b00078b92bb.png)
 
-
-	1) Create the working directory, and change into it.
+	- Create the working directory, and change into it.
 	```zsh
 	mkdir managing-inventory
 	cd managing-inventory
 	```
 
-	2) Create an inventory file in the working directory. Use the Server Inventory Specifications table as a guide. In addition, create a new group called Indonesia from the combined location group and add pod-zaidanmuhammad169-contoller as ungrouped host.
+	- Create an inventory file in the working directory. Use the Server Inventory Specifications table as a guide. In addition, create a new group called Indonesia from the combined location group and add pod-zaidanmuhammad169-contoller as ungrouped host.
 	```zsh
 	vim inventory
 	```
