@@ -4,14 +4,14 @@
 
 1. Set hostname using 'hostnamectl'
 	- execute on all nodes
-```shell
+```zsh
 hostnamectl hostname pod-zaidanmuhammad169-controller
 hostnamectl hostname pod-zaidanmuhammad169-managed1
 hostnamectl hostname pod-zaidanmuhammad169-managed2
 ```
 
 2. Map host on /etc/hosts
-```shell
+```zsh
 nano /etc/hosts
 ```
 ```
@@ -24,12 +24,12 @@ nano /etc/hosts
 
 3. Create and Distribute SSH Keygen
 	- create SSH Keygen
-	```shell
+	```zsh
 	ssh-keygen -t rsa
 	```
 
 	- Copy controller public key from regular user to all nodes.
-	```shell
+	```zsh
 	ssh-copy-id -i ~/.ssh/id_rsa.pub student@pod-zaidanmuhammad169-controller
 	ssh-copy-id -i ~/.ssh/id_rsa.pub student@pod-zaidanmuhammad169-managed1
 	ssh-copy-id -i ~/.ssh/id_rsa.pub student@pod-zaidanmuhammad169-managed2
@@ -40,20 +40,20 @@ nano /etc/hosts
 ## Lab 3.2 : Installing Ansible
 
 1. Install required package.
-```shell
+```zsh
 sudo apt update
 sudo apt install -y software-properties-common
 ```
 
 2. configure the PPA on pod-zaidanmuhammad169-controller and install ansible.
-```shell
+```zsh
 sudo add-apt-repository --yes --update ppa:ansible/ansible
 sudo apt install ansible=6.4.0-1ppa~jammy
 ansible --version
 ```
 
 3. Setup default configuration ansible.
-```shell
+```zsh
 sudo mkdir -p /etc/ansible
 sudo vim /etc/ansible/hosts
 ```
@@ -68,51 +68,51 @@ pod-zaidanmuhammad169-managed2
 
 4. Show Hosts
 	- Show all hosts from inventory.
-	```shell
+	```zsh
 	ansible all --list-hosts
 	```
 
 	- Show ungrouped hosts from inventory.
-	```shell
+	```zsh
 	ansible ungrouped --list-hosts
 	```
 
 	- Show hosts in group webservers.
-	```shell
+	```zsh
 	ansible webservers --list-hosts
 	```
 
 5. Check ping to all nodes
-```shell
+```zsh
 ansible all -m ping
 ```
 
 ## Lab 4.1 : Ad-hoc Command
 
 1. Show hostname on all node
-```shell
+```zsh
 ansible all -m command -a "hostname"
 ```
 
 2. Show facts from managed1.
-```shell
+```zsh
 ansible pod-zaidanmuhammad169-managed1 -m setup 
 ```
 
 3. Check information localhost.
-```shell
+```zsh
 ansible localhost -m command -a 'id'
 ansible localhost -u student -m command -a 'id'
 ```
 
 4. Update content to file /etc/motd.
-```shell
+```zsh
 ansible pod-zaidanmuhammad169-managed1 --become -u student -m copy -a "content='Executed by Ansible\n' dest=/etc/motd"
 ansible pod-zaidanmuhammad169-managed1 -u student -m command -a 'cat /etc/motd'
 ```
 
 5. Verify.
-```shell
+```zsh
 ssh pod-zaidanmuhammad169-managed1
 ```
 ```
@@ -129,13 +129,13 @@ Executed by Ansible
 
 
 	1) Create the working directory, and change into it.
-	```shell
+	```zsh
 	mkdir managing-inventory
 	cd managing-inventory
 	```
 
 	2) Create an inventory file in the working directory. Use the Server Inventory Specifications table as a guide. In addition, create a new group called Indonesia from the combined location group and add pod-zaidanmuhammad169-contoller as ungrouped host.
-	```shell
+	```zsh
 	vim inventory
 	```
 	```
@@ -164,32 +164,32 @@ Executed by Ansible
 2. Verify the managed hosts or groups in the custom the inventory file.
 
 	- Check the list of all hosts.
-	```shell
+	```zsh
 	ansible all -i inventory --list-hosts
 	```
 
 	- Check the list of ungrouped hosts.
-	```shell
+	```zsh
 	ansible ungrouped -i inventory --list-hosts
 	```
 
 	- Check host pod-zaidanmuhammad169-managed1 in the list of hosts in the inventory file.
-	```shell
+	```zsh
 	ansible pod-zaidanmuhammad169-managed1 -i inventory --list-hosts
 	```
 
 	- Check the list of hosts in the Development group.
-	```shell
+	```zsh
 	ansible Development -i inventory  --list-hosts
 	```
 
 	- Check the list of hosts in the Testing group.
-	```shell
+	```zsh
 	ansible Testing -i inventory  --list-hosts
 	```
 
 	- Check the list of hosts in the Indonesia group.
-	```shell
+	```zsh
 	ansible Indonesia -i inventory  --list-hosts
 	```
 
