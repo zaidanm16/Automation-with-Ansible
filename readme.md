@@ -125,18 +125,15 @@ Executed by Ansible
 1. Create a custom inventory file in the working directory.
 
 	- Server Inventory Spesifications
-
 	![Server Inventory Spesifications](https://course.adinusa.id/media/markdownx/a7245250-d68b-4975-8f39-3b00078b92bb.png)
 
 	- Create the working directory, and change into it.
-
 	```zsh
 	mkdir managing-inventory
 	cd managing-inventory
 	```
 
 	- Create an inventory file in the working directory. Use the Server Inventory Specifications table as a guide. In addition, create a new group called Indonesia from the combined location group and add pod-zaidanmuhammad169-contoller as ungrouped host.
-	
 	```zsh
 	vim inventory
 	```
@@ -194,4 +191,49 @@ Executed by Ansible
 	```zsh
 	ansible Indonesia -i inventory  --list-hosts
 	```
+
+## Lab 4.3 : Managing Ansible Configuration Files
+
+1. Create a new directory
+```zsh
+mkdir -p deploy-review
+cd deploy-review
+```
+
+2. Create ansible configuration.
+```zsh
+vim ansible.cfg
+```
+```
+...
+[defaults]
+inventory = ./inventory
+remote_user = student
+host_key_checking = False
+...
+```
+
+3. Create inventory.
+```zsh
+vim inventory
+```
+```
+...
+[servers]
+pod-zaidanmuhammad169-managed1
+pod-zaidanmuhammad169-managed2
+```
+
+4. Run ansible with ad-hoc command.
+```zsh
+ansible all -m command -a 'id'
+ansible all -m copy -a "content='This server is managed by Ansible. \n' dest=/etc/motd" --become
+ansible all -m command -a 'cat /etc/motd'
+```
+
+5. Verify
+```zsh
+ssh pod-zaidanmuhammad169-managed1 "whoami; cat /etc/motd"
+ssh pod-zaidanmuhammad169-managed2 "whoami; cat /etc/motd"
+```
 
