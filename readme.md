@@ -128,6 +128,7 @@ Executed by Ansible
 	![Server Inventory Spesifications](https://course.adinusa.id/media/markdownx/a7245250-d68b-4975-8f39-3b00078b92bb.png)
 
 	- Create the working directory, and change into it.
+	
 	```zsh
 	mkdir managing-inventory
 	cd managing-inventory
