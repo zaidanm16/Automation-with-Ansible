@@ -125,16 +125,18 @@ Executed by Ansible
 1. Create a custom inventory file in the working directory.
 
 	- Server Inventory Spesifications
+
 	![Server Inventory Spesifications](https://course.adinusa.id/media/markdownx/a7245250-d68b-4975-8f39-3b00078b92bb.png)
 
 	- Create the working directory, and change into it.
-	
+
 	```zsh
 	mkdir managing-inventory
 	cd managing-inventory
 	```
 
 	- Create an inventory file in the working directory. Use the Server Inventory Specifications table as a guide. In addition, create a new group called Indonesia from the combined location group and add pod-zaidanmuhammad169-contoller as ungrouped host.
+	
 	```zsh
 	vim inventory
 	```
