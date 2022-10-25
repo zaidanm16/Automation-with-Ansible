@@ -514,9 +514,6 @@ pod-zaidanmuhammad169-managed2
 
 #### Create playbook.
 ```zsh
-echo "This is a test page." > files/index.html
-```
-```zsh
 vim quiz-1-1_playbook.yml
 ```
 ```
