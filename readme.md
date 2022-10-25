@@ -443,7 +443,7 @@ vim site.yml
       service: name=apache2 state=restarted enabled=yes
 
     - name: copy index.html
-      template: src=<zaidanmuhammad169>.html.j2 dest=/var/www/html/zaidanmuhammad169.html
+      template: src=zaidanmuhammad169.html.j2 dest=/var/www/html/zaidanmuhammad169.html
 ...
 ```
 
