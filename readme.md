@@ -560,8 +560,8 @@ vim quiz-1-1_playbook.yml
 
 #### Running playbook.
 ```zsh
-ansible-playbook --syntax-check playbook.yml
-ansible-playbook playbook.yml
+ansible-playbook --syntax-check quiz-1-1_playbook.yml
+ansible-playbook quiz-1-1_playbook.yml
 ```
 
 #### Verify webserver.
