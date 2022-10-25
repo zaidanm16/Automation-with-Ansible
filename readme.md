@@ -557,9 +557,6 @@ vim quiz-1-1_playbook.yml
         status_code: 200
         return_content: yes
       register: Result
-    - name: Print Ouput Webserver
-      debug:
-        var: Result.content
 ...
 ```
 
