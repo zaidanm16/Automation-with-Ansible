@@ -399,3 +399,69 @@ ansible-playbook playbook.yml
 ```zsh
 curl pod-zaidanmuhammad169-managed2
 ```
+
+## Lab 4.6 : Using Jinja 2 Template
+
+#### Create directory.
+```zsh
+mkdir jinja2-template
+cd jinja2-template
+```
+
+#### Create inventory.
+```zsh
+vim inventory
+```
+
+```
+...
+[webservers]
+pod-zaidanmuhammad169-managed1
+...
+```
+
+#### Create playbook.
+```zsh
+vim site.yml
+```
+
+```
+...
+- name: install and start apache2
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: apache2 package is present
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+        force_apt_get: yes
+
+    - name: restart apache2 service
+      service: name=apache2 state=restarted enabled=yes
+
+    - name: copy index.html
+      template: src=<zaidanmuhammad169>.html.j2 dest=/var/www/html/zaidanmuhammad169.html
+...
+```
+
+#### Create Jinja 2 template.
+```zsh
+vim zaidanmuhammad169.html.j2
+...
+Hello World!
+This is zaidanmuhammad169 site.
+...
+```
+
+#### Run playbook.
+```zsh
+ansible-playbook -i inventory site.yml
+```
+
+#### Verify.
+```zsh
+curl pod-zaidanmuhammad169-managed1/zaidanmuhammad169.html
+```
