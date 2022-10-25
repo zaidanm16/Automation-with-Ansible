@@ -2,7 +2,7 @@
 
 ## Lab 3.1 : Preparation of Lab Environment
 
-** Set hostname using 'hostnamectl' **
+**Set hostname using 'hostnamectl'**
 - execute on all nodes
 ```zsh
 hostnamectl hostname pod-zaidanmuhammad169-controller
@@ -10,7 +10,7 @@ hostnamectl hostname pod-zaidanmuhammad169-managed1
 hostnamectl hostname pod-zaidanmuhammad169-managed2
 ```
 
-** Map host on /etc/hosts **
+**Map host on /etc/hosts**
 ```zsh
 nano /etc/hosts
 ```
@@ -22,7 +22,7 @@ nano /etc/hosts
 ...
 ```
 
-** Create and Distribute SSH Keygen **
+**Create and Distribute SSH Keygen**
 1. create SSH Keygen
 ```zsh
 ssh-keygen -t rsa
@@ -39,20 +39,20 @@ ssh-copy-id -i .ssh/id_rsa.pub student@pod-zaidanmuhammad169-managed2
 
 ## Lab 3.2 : Installing Ansible
 
-** Install required package. **
+**Install required package.**
 ```zsh
 sudo apt update
 sudo apt install -y software-properties-common
 ```
 
-** configure the PPA on pod-zaidanmuhammad169-controller and install ansible. **
+**configure the PPA on pod-zaidanmuhammad169-controller and install ansible.**
 ```zsh
 sudo add-apt-repository --yes --update ppa:ansible/ansible
 sudo apt install ansible=6.4.0-1ppa~jammy
 ansible --version
 ```
 
-** Setup default configuration ansible. **
+**Setup default configuration ansible.**
 ```zsh
 sudo mkdir -p /etc/ansible
 sudo vim /etc/ansible/hosts
@@ -66,7 +66,7 @@ pod-zaidanmuhammad169-managed2
 ...
 ```
 
-** Show Hosts **
+**Show Hosts**
 - Show all hosts from inventory.
 ```zsh
 ansible all --list-hosts
@@ -82,36 +82,36 @@ ansible ungrouped --list-hosts
 ansible webservers --list-hosts
 ```
 
-** Check ping to all nodes **
+**Check ping to all nodes**
 ```zsh
 ansible all -m ping
 ```
 
 ## Lab 4.1 : Ad-hoc Command
 
-** Show hostname on all node **
+**Show hostname on all node**
 ```zsh
 ansible all -m command -a "hostname"
 ```
 
-** Show facts from managed1. **
+**Show facts from managed1.**
 ```zsh
 ansible pod-zaidanmuhammad169-managed1 -m setup 
 ```
 
-** Check information localhost. **
+**Check information localhost.**
 ```zsh
 ansible localhost -m command -a 'id'
 ansible localhost -u student -m command -a 'id'
 ```
 
-** Update content to file /etc/motd. **
+**Update content to file /etc/motd.**
 ```zsh
 ansible pod-zaidanmuhammad169-managed1 --become -u student -m copy -a "content='Executed by Ansible\n' dest=/etc/motd"
 ansible pod-zaidanmuhammad169-managed1 -u student -m command -a 'cat /etc/motd'
 ```
 
-** Verify. **
+**Verify.**
 ```zsh
 ssh pod-zaidanmuhammad169-managed1
 ```
@@ -122,7 +122,7 @@ Executed by Ansible
 
 ## Lab 4.2 : Manage Ansible Inventory
 
-** Create a custom inventory file in the working directory. **
+**Create a custom inventory file in the working directory.**
 
 Server Inventory Spesifications  
 
@@ -161,7 +161,7 @@ Jakarta
 Bogor
 ```
 
-** Verify the managed hosts or groups in the custom the inventory file. **
+**Verify the managed hosts or groups in the custom the inventory file.**
 
 - Check the list of all hosts.
 ```zsh
@@ -195,13 +195,13 @@ ansible Indonesia -i inventory  --list-hosts
 
 ## Lab 4.3 : Managing Ansible Configuration Files
 
-** Create a new directory **
+**Create a new directory**
 ```zsh
 mkdir -p deploy-review
 cd deploy-review
 ```
 
-** Create ansible configuration. **
+**Create ansible configuration.**
 ```zsh
 vim ansible.cfg
 ```
@@ -214,7 +214,7 @@ host_key_checking = False
 ...
 ```
 
-** Create inventory. **
+**Create inventory.**
 ```zsh
 vim inventory
 ```
@@ -225,14 +225,14 @@ pod-zaidanmuhammad169-managed1
 pod-zaidanmuhammad169-managed2
 ```
 
-** Run ansible with ad-hoc command. **
+**Run ansible with ad-hoc command.**
 ```zsh
 ansible all -m command -a 'id'
 ansible all -m copy -a "content='This server is managed by Ansible. \n' dest=/etc/motd" --become
 ansible all -m command -a 'cat /etc/motd'
 ```
 
-** Verify **
+**Verify**
 ```zsh
 ssh pod-zaidanmuhammad169-managed1 "whoami; cat /etc/motd"
 ssh pod-zaidanmuhammad169-managed2 "whoami; cat /etc/motd"
@@ -240,13 +240,13 @@ ssh pod-zaidanmuhammad169-managed2 "whoami; cat /etc/motd"
 
 ## Lab 4.4 : Writing and Running Playbooks
 
-** Create directory. **
+**Create directory.**
 ```zsh
 mkdir -p playbook-basic/files
 cd playbook-basic
 ```
 
-** Create ansible configuration. **
+**Create ansible configuration.**
 ```zsh
 vim ansible.cfg
 ```
@@ -258,7 +258,7 @@ remote_user = student
 ...
 ```
 
-** Create inventory. **
+**Create inventory.**
 ```zsh
 vim inventory
 ```
@@ -269,7 +269,7 @@ pod-zaidanmuhammad169-managed1
 ...
 ```
 
-** Create playbook. **
+**Create playbook.**
 ```zsh
 echo "This is a test page." > files/index.html
 ```
@@ -302,25 +302,25 @@ vim site.yml
 ...
 ```
 
-** Run playbook. **
+**Run playbook.**
 ```zsh
 ansible-playbook site.yml
 ```
 
-** Verify webserver. **
+**Verify webserver.**
 ```zsh
 curl pod-zaidanmuhammad169-managed1
 ```
 
 ## Lab 4.5 : Managing Variables
 
-** Create a directory. **
+**Create a directory.**
 ```zsh
 mkdir data-variables/
 cd data-variables/
 ```
 
-** Create ansible local configuration. **
+**Create ansible local configuration.**
 ```zsh
 vim ansible.cfg
 ```
@@ -333,7 +333,7 @@ host_key_checking = False
 ...
 ```
 
-** Create an inventory. **
+**Create an inventory.**
 ```zsh
 vim inventory
 ```
@@ -344,7 +344,7 @@ vim inventory
 pod-zaidanmuhammad169-managed2
 ```
 
-** Create playbook. **
+**Create playbook.**
 ```zsh
 vim playbook.yml
 ```
@@ -389,26 +389,26 @@ vim playbook.yml
         var: Result.content
 ```
 
-** Running playbook. **
+**Running playbook.**
 ```zsh
 ansible-playbook --syntax-check playbook.yml
 ansible-playbook playbook.yml
 ```
 
-** Verify webserver. **
+**Verify webserver.**
 ```zsh
 curl pod-zaidanmuhammad169-managed2
 ```
 
 ## Lab 4.6 : Using Jinja 2 Template
 
-** Create directory. **
+**Create directory.**
 ```zsh
 mkdir jinja2-template
 cd jinja2-template
 ```
 
-** Create inventory. **
+**Create inventory.**
 ```zsh
 vim inventory
 ```
@@ -420,7 +420,7 @@ pod-zaidanmuhammad169-managed1
 ...
 ```
 
-** Create playbook. **
+**Create playbook.**
 ```zsh
 vim site.yml
 ```
@@ -447,7 +447,7 @@ vim site.yml
 ...
 ```
 
-** Create Jinja 2 template. **
+**Create Jinja 2 template.**
 ```zsh
 vim zaidanmuhammad169.html.j2
 ```
@@ -458,19 +458,19 @@ This is zaidanmuhammad169 site.
 ...
 ```
 
-** Run playbook. **
+**Run playbook.**
 ```zsh
 ansible-playbook -i inventory site.yml
 ```
 
-** Verify. **
+**Verify.**
 ```zsh
 curl pod-zaidanmuhammad169-managed1/zaidanmuhammad169.html
 ```
 
 ## Quiz 1.1 : Playbook
 
-** (Instructions) **
+**(Instructions)**
 1. Create a new folder named quiz-001-1 for working directory.
 2. Create a new file ansible.cfg, define the location of inventory on that file. also, create inventory that stored the pod-username-managed2.
 3. Create a new playbook named quiz-1-1_playbook.yml. Add the necessary entries to start a first play named Quiz Playbook. define pod-username-managed2 as target host and student as the remote user ,also add require privilege escalation.
@@ -480,20 +480,20 @@ curl pod-zaidanmuhammad169-managed1/zaidanmuhammad169.html
 7. Define another play for the task to be performed on the control node. This play will test access to the apache2 web server that should be running on the pod-username-managed2 host. This play does not require privilege escalation, and will run on the localhost.
 8. Add a task that tests the web service running on http://pod-username-managed2/index.php from the control node using the uri module. Check for a return status code of 200. After that, save and run the playbook.
 
-** (Verification) **
+**(Verification)**
 1. make sure you have ansible.cfg, inventory, and quiz-1-1_playbook.yml file in the quiz-001-1 directory.
 2. Make sure apache2, mariadb-server, php, and php-mysql packages are installed.
 3. Make sure the apache2 and mariadb service is running.
 4. Make sure the /var/www/html/index.php file is exist in the managed pod-username-managed2.
 5. Test webserver on pod-username-managed2, make sure the 'Adinusa quiz Playbook - username' text its appears.
 
-** Create directory. **
+**Create directory.**
 ```zsh
 mkdir quiz-001-1
 cd quiz-001-1
 ```
 
-** Create ansible configuration. **
+**Create ansible configuration.**
 ```zsh
 vim ansible.cfg
 ```
@@ -503,7 +503,7 @@ inventory = ./inventory
 remote_user = student
 ```
 
-** Create inventory. **
+**Create inventory.**
 ```zsh
 vim inventory
 ```
@@ -512,7 +512,7 @@ vim inventory
 pod-zaidanmuhammad169-managed2
 ```
 
-** Create playbook. **
+**Create playbook.**
 ```zsh
 vim quiz-1-1_playbook.yml
 ```
@@ -560,20 +560,20 @@ vim quiz-1-1_playbook.yml
 ...
 ```
 
-** Running playbook. **
+**Running playbook.**
 ```zsh
 ansible-playbook --syntax-check quiz-1-1_playbook.yml
 ansible-playbook quiz-1-1_playbook.yml
 ```
 
-** Verify webserver. **
+**Verify webserver.**
 ```zsh
 curl pod-zaidanmuhammad169-managed2
 ```
 
 ## Quiz 1.2 : Variables
 
-** (Instructions) **
+**(Instructions)**
 1. Create new folder quiz-001-2 for working directory.
 2. Create a new file ansible.cfg, define the location of inventory on that file. also, create inventory that stored the pod-username-managed2.
 3. Create the playbook named quiz-1-2_variables.yml and define the following variables in the vars section.
@@ -591,20 +591,20 @@ curl pod-zaidanmuhammad169-managed2
 7. Define another play for the task to be performed on the localhost. This play will test access to the web server that should be running on the pod-username-managed2 host. This play does not require privilege escalation.
 8. Add a task that tests the web service running on http://pod-username-managed2/index.html from the control node using the uri module. Check for a return status code of 200. After that, save and run the playbook.
 
-** (Verification) **
+**(Verification)**
 1. Make sure you have ansible.cfg, inventory, and quiz-1-2_variables.yml file in the quiz-001-2 directory.
 2. Make sure apache2, and python3-urllib3 packages are installed.
 3. Make sure the apache2 service is running.
 4. Make sure the /var/www/html/index.html file is exist in the managed pod-username-managed2.
 5. Test webserver on pod-username-managed2. make sure the 'adinusa quiz Variable - username' text its appears.
 
-** Create directory. **
+**Create directory.**
 ```zsh
 mkdir quiz-001-2
 cd quiz-001-2
 ```
 
-** Create ansible configuration. **
+**Create ansible configuration.**
 ```zsh
 vim ansible.cfg
 ```
@@ -614,7 +614,7 @@ inventory = ./inventory
 remote_user = student
 ```
 
-** Create inventory. **
+**Create inventory.**
 ```zsh
 vim inventory
 ```
@@ -623,7 +623,7 @@ vim inventory
 pod-zaidanmuhammad169-managed2
 ```
 
-** Create playbook. **
+**Create playbook.**
 ```zsh
 vim quiz-1-2_variables.yml
 ```
@@ -665,13 +665,13 @@ vim quiz-1-2_variables.yml
       register: Result
 ```
 
-** Running playbook. **
+**Running playbook.**
 ```zsh
 ansible-playbook --syntax-check quiz-1-2_variables.yml
 ansible-playbook quiz-1-2_variables.yml
 ```
 
-** Verify webserver. **
+**Verify webserver.**
 ```zsh
 curl pod-zaidanmuhammad169-managed2
 ```
