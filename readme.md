@@ -124,7 +124,8 @@ Executed by Ansible
 
 #### Create a custom inventory file in the working directory.
 
-Server Inventory Spesifications
+Server Inventory Spesifications  
+
 ![Server Inventory Spesifications](https://course.adinusa.id/media/markdownx/a7245250-d68b-4975-8f39-3b00078b92bb.png)
 
 1. Create the working directory, and change into it.
