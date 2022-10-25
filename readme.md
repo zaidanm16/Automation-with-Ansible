@@ -545,7 +545,7 @@ vim quiz-1-1_playbook.yml
         state: started
     - name: Web content
       copy:
-        content: "Adinusa quiz Playbook - zaidanmuhammad169"
+        content: "Adinusa quiz Playbook - zaidanmuhammad169\n"
         dest: /var/www/html/index.php
 
 - name: Verify the apache service
@@ -636,7 +636,7 @@ vim quiz-1-2_variables.yml
       - apache2
       - python3-urllib3
     web_Service: apache2
-    content_File: "adinusa lab quiz variable - zaidanmuhammad169"
+    content_File: "adinusa lab quiz variable - zaidanmuhammad169\n"
     dest_File: /var/www/html/index.html
   tasks:
     - name: Required packages are installed and up to date
