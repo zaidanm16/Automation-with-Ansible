@@ -450,6 +450,8 @@ vim site.yml
 #### Create Jinja 2 template.
 ```zsh
 vim zaidanmuhammad169.html.j2
+```
+```
 ...
 Hello World!
 This is zaidanmuhammad169 site.
