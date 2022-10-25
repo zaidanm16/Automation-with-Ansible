@@ -652,8 +652,8 @@ vim quiz-1-2_variables.yml
         state: started
     - name: Web content
       copy:
-        content: {{content_File}}
-        dest: {{dest_File}}
+        content: "{{content_File}}"
+        dest: "{{dest_File}}"
 - name: Verify the apache service
   hosts: localhost
   tasks:
