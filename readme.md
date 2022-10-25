@@ -540,7 +540,7 @@ vim quiz-1-1_playbook.yml
         state: started
     - name: The MariaDB is enabled and running
       service:
-        name: mariadb-server
+        name: mariadb
         enabled: true
         state: started
     - name: Web content
