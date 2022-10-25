@@ -311,3 +311,91 @@ ansible-playbook site.yml
 ```zsh
 curl pod-zaidanmuhammad169-managed1
 ```
+
+## Lab 4.5 : Managing Variables
+
+#### Create a directory.
+```zsh
+mkdir data-variables/
+cd data-variables/
+```
+
+#### Create ansible local configuration.
+```zsh
+vim ansible.cfg
+```
+```
+...
+[defaults]
+inventory = ./inventory
+remote_user = student
+host_key_checking = False
+...
+```
+
+#### Create an inventory.
+```zsh
+vim inventory
+```
+
+```
+...
+[webserver]
+pod-zaidanmuhammad169-managed2
+```
+
+#### Create playbook.
+```zsh
+vim playbook.yml
+```
+```
+...
+- name: Deploy and start Apache 2 service
+  hosts: webserver
+  become: true
+  vars:
+    web_pkg: apache2
+    web_service: apache2
+    python_pkg: python3-urllib3
+  tasks:
+    - name: Required packages are installed and up to date
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+        name:
+          - "{{web_pkg}}"
+          - "{{python_pkg}}"
+        state: latest
+    - name: The {{web_service}} service is started and enabled
+      service:
+         name: "{{web_service}}"
+         enabled: true
+         state: started
+    - name: Web content is in place
+      copy:
+        content: "Example web content"
+        dest: /var/www/html/index.html
+- name: Verify the apache service
+  hosts: localhost
+  tasks:
+    - name: Ensure the webserver is reacheable
+      uri:
+        url: http://pod-zaidanmuhammad169-managed2
+        status_code: 200
+        return_content: yes
+      register: Result
+    - name: Print Ouput Webserver
+      debug:
+        var: Result.content
+```
+
+#### Running playbook.
+```zsh
+ansible-playbook --syntax-check playbook.yml
+ansible-playbook playbook.yml
+```
+
+#### Verify webserver.
+```zsh
+curl pod-zaidanmuhammad169-managed2
+```
