@@ -533,11 +533,14 @@ vim quiz-1-1_playbook.yml
           - php
           - php-mysql
         state: latest
-    - name: The package is enabled and running
+    - name: The Apache2 is enabled and running
       service:
-        name:
-          - apache2
-          - mariadb-server
+        name: apache2
+        enabled: true
+        state: started
+    - name: The MariaDB is enabled and running
+      service:
+        name: mariadb-server
         enabled: true
         state: started
     - name: Web content
