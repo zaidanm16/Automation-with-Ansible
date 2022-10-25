@@ -538,6 +538,8 @@ vim quiz-1-1_playbook.yml
         name:
           - apache2
           - mariadb-server
+        enabled: true
+        state: started
     - name: Web content
       copy:
         content: "Adinusa quiz Playbook - zaidanmuhammad169"
