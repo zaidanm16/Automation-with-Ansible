@@ -237,3 +237,76 @@ ssh pod-zaidanmuhammad169-managed1 "whoami; cat /etc/motd"
 ssh pod-zaidanmuhammad169-managed2 "whoami; cat /etc/motd"
 ```
 
+## Lab 4.4 : Writing and Running Playbooks
+
+#### Create directory.
+```zsh
+mkdir -p playbook-basic/files
+cd playbook-basic
+```
+
+#### Create ansible configuration.
+```zsh
+vim ansible.cfg
+```
+```
+...
+[defaults]
+inventory = ./inventory
+remote_user = student
+...
+```
+
+#### Create inventory.
+```zsh
+vim inventory
+```
+```
+...
+[web]
+pod-zaidanmuhammad169-managed1
+...
+```
+
+#### Create playbook.
+```zsh
+echo "This is a test page." > files/index.html
+```
+```zsh
+vim site.yml
+```
+```
+...
+- name: Install and start Apache 2.
+  hosts: web
+  become: true
+  tasks:
+    - name: apache2 package is present
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+        name: apache2
+        state: present
+
+    - name: correct index.html is present
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+
+    - name: Apache 2 is started
+      service:
+        name: apache2
+        state: started
+        enabled: true
+...
+```
+
+#### Run playbook.
+```zsh
+ansible-playbook site.yml
+```
+
+#### Verify webserver.
+```zsh
+curl pod-zaidanmuhammad169-managed1
+```
