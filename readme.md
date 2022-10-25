@@ -578,12 +578,12 @@ curl pod-zaidanmuhammad169-managed2
 2. Create a new file ansible.cfg, define the location of inventory on that file. also, create inventory that stored the pod-zaidanmuhammad169-managed2.
 3. Create the playbook named quiz-1-2_variables.yml and define the following variables in the vars section.
    List of vars:
- - required_Pkg:
- - apache2
- - python3-urllib3
- web_Sevice: apache2
- content_File: "adinusa lab quiz variable - zaidanmuhammad169"
- dest_File: /var/www/html/index.html
+   - required_Pkg:
+   - apache2
+   - python3-urllib3
+   - web_Sevice: apache2
+   - content_File: "adinusa lab quiz variable - zaidanmuhammad169"
+   - dest_File: /var/www/html/index.html
 
 4. Create an task block that uses those vars. Create the first task that installed required packages.
 5. Create the tasks to make sure that the services are started and enabled.
