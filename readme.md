@@ -764,3 +764,9 @@ vim mariadb.list.j2
 ```
 deb https://mirror.telkomuniversity.ac.id/mariadb/repo/10.9/ubuntu jammy main
 ```
+
+**Running playbook.**
+```zsh
+ansible-playbook --syntax-check quiz-1-3_j2template.yml
+ansible-playbook quiz-1-3_j2template.yml
+```
