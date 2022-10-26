@@ -714,7 +714,7 @@ vim quiz-1-3_j2template.yml
 ```
 ```
 - name: Quiz Jinja 2
-  hosts: webservers
+  hosts: all
   become: true
   vars:
     required_pkg:
@@ -743,7 +743,7 @@ vim quiz-1-3_j2template.yml
     - name: The Nginx service is started and enabled
       service: name=nginx state=started enabled=true
     - name: The MariaDB Server is started and enabled
-      service: name=mariadb-server state=started enabled=true
+      service: name=mariadb state=started enabled=true
 ```
 
 **Create Jinja2 Template**
