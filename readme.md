@@ -762,7 +762,9 @@ deb-src [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.o
 vim mariadb.list.j2
 ```
 ```
+...
 deb https://mirror.telkomuniversity.ac.id/mariadb/repo/10.9/ubuntu jammy main
+...
 ```
 
 **Running playbook.**
