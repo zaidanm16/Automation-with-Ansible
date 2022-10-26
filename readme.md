@@ -675,3 +675,92 @@ ansible-playbook quiz-1-2_variables.yml
 ```zsh
 curl pod-zaidanmuhammad169-managed2
 ```
+
+## Quiz 1.3 : Jinja 2 Template
+
+**(Instructions)**
+1. Create a new folder in the user home directory. Name it quiz-001-3.
+2. In the quiz-001-3 folder, create a playbook with the tasks below and execute to the pod-username-managed1 and pod-username-managed2 nodes as a group called webservers:
+3. Name the file of playbook with quiz-1-3_j2template.yml
+4. Add mariadb 10.9 and nginx repository to the /etc/apt/sources.list.d/ using jinja2 template.
+5. Name the nginx repository file with nginx.list, and name the file of jinja2 template with nginx.list.j2.
+6. Name the mariadb repository file with mariadb.list, and name the file of jinja2 template with mariadb.list.j2.
+7. Create task that update the repository.
+8. Create task that install nginx=1.23.1-1jammy, mariadb-server-10.9 and mariadb-client-10.9.
+9. Create task that make sure to start dan enable service nginx and mariadb-server (ensure the value of state in the service section is started), and make sure to write this on below format:
+**name: example name of service**
+```
+service: name=<service> state=<state of service> anotherkey=<another rvalue>
+```
+
+**Create directory.**
+```zsh
+mkdir quiz-001-3
+cd quiz-001-3
+```
+
+**Create inventory.**
+```zsh
+vim inventory
+```
+```
+[webservers]
+pod-zaidanmuhammad169-managed1
+pod-zaidanmuhammad169-managed2
+```
+
+**Create Playbook.**
+```zsh
+vim quiz-1-3_j2template.yml
+```
+```
+- name: Quiz Jinja 2
+  hosts: webservers
+  become: true
+  vars:
+    required_pkg:
+      - nginx=1.23.1-1jammy
+      - mariadb-server-10.9
+      - mariadb-client-10.9
+  tasks:
+    - name: copy MariaDB Repo
+      template: src=mariadb.list.j2 dest=/etc/apt/sources.list.d/mariadb.list
+    - name: copy Nginx Repo
+      template: src=nginx.list.j2 dest=/etc/apt/sources.list.d/nginx.list
+    - name: Update Repo
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+        force_apt_get: true
+    - name: Install GPG Key for Nginx Repo
+      shell: curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+    - name: Install GPG Key for MariaDB Repo
+      shell: sudo curl -o /etc/apt/trusted.gpg.d/mariadb_release_signing_key.asc 'https://mariadb.org/mariadb_release_signing_key.asc'
+    - name: Install Required Package
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+        name: "{{required_pkg}}"
+        state: latest
+    - name: The Nginx service is started and enabled
+      service: name=nginx state=started enabled=true
+    - name: The MariaDB Server is started and enabled
+      service: name=mariab-server state=started enabled=true
+```
+
+**Create Jinja2 Template**
+```zsh
+vim nginx.list.j2
+```
+```
+...
+deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/mainline/ubuntu jammy nginx
+deb-src [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/mainline/ubuntu jammy nginx
+...
+```
+```zsh
+vim mariadb.list.j2
+```
+```
+deb https://mirror.telkomuniversity.ac.id/mariadb/repo/10.9/ubuntu jammy main
+```
