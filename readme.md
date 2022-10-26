@@ -705,8 +705,7 @@ vim inventory
 ```
 ```
 [webservers]
-pod-zaidanmuhammad169-managed1
-pod-zaidanmuhammad169-managed2
+pod-zaidanmuhammad169-managed[1:2]
 ```
 
 **Create Playbook.**
@@ -719,7 +718,7 @@ vim quiz-1-3_j2template.yml
   become: true
   vars:
     required_pkg:
-      - nginx=1.23.1-1jammy
+      - nginx=1.23.1-1~jammy
       - mariadb-server-10.9
       - mariadb-client-10.9
   tasks:
@@ -727,15 +726,14 @@ vim quiz-1-3_j2template.yml
       template: src=mariadb.list.j2 dest=/etc/apt/sources.list.d/mariadb.list
     - name: copy Nginx Repo
       template: src=nginx.list.j2 dest=/etc/apt/sources.list.d/nginx.list
-    - name: Update Repo
-      apt:
-        update_cache: true
-        cache_valid_time: 3600
-        force_apt_get: true
     - name: Install GPG Key for Nginx Repo
       shell: curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
     - name: Install GPG Key for MariaDB Repo
       shell: sudo curl -o /etc/apt/trusted.gpg.d/mariadb_release_signing_key.asc 'https://mariadb.org/mariadb_release_signing_key.asc'
+    - name: Update Repo
+      apt:
+        update_cache: true
+        force_apt_get: true
     - name: Install Required Package
       apt:
         update_cache: yes
@@ -745,7 +743,7 @@ vim quiz-1-3_j2template.yml
     - name: The Nginx service is started and enabled
       service: name=nginx state=started enabled=true
     - name: The MariaDB Server is started and enabled
-      service: name=mariab-server state=started enabled=true
+      service: name=mariadb-server state=started enabled=true
 ```
 
 **Create Jinja2 Template**
@@ -763,7 +761,8 @@ vim mariadb.list.j2
 ```
 ```
 ...
-deb https://mirror.telkomuniversity.ac.id/mariadb/repo/10.9/ubuntu jammy main
+deb https://mirrors.aliyun.com/mariadb/repo/10.9/ubuntu jammy main
+deb-src https://mirrors.aliyun.com/mariadb/repo/10.9/ubuntu jammy main
 ...
 ```
 
